@@ -10,8 +10,10 @@ This package turns the White Pack feature set into a separate multi-business cat
 - `quotation.html` — product picker, client-specific prices/quantities, discount/fee, print-to-PDF, private cloud quotation archive and JSON backup.
 - `driver-tracking.html` — staff/driver login, opt-in GPS sharing and location map links.
 - `saas.js` — shared Supabase client, domain/slug resolver, image optimizer.
-- `SAAS_MIGRATION.sql` — new isolated `mc_saas_*` schema and RLS policies.
-- `PLATFORM_ADMIN_GUIDE.sql` — SQL examples for manual activation, domain approval and driver assignment.
+- `SAAS_MIGRATION.sql` — isolated `mc_saas_*` schema and RLS policies.
+- `POS_SYNC_MIGRATION.sql` — additive POS identifiers, synchronization jobs and audit history.
+- `SAAS_HARDENING_MIGRATION.sql` — completes missing settings/template/platform RPCs, adds subscription fields, and protects platform-only fields with an email allowlist.
+- `PLATFORM_ADMIN_GUIDE.sql` — platform administrator allowlist, domain approval and driver assignment instructions.
 
 ## Important: do not overwrite White Pack
 
@@ -20,13 +22,14 @@ Keep these files in a **new repository** such as `my-catalogue-saas`. They are n
 ## Setup order
 
 1. Back up the intended My Catalogue Supabase project.
-2. Open Supabase → SQL Editor and run `SAAS_MIGRATION.sql` once. Do not run it in the White Pack Supabase project.
-3. In Supabase → Authentication, configure Site URL and Redirect URLs for the deployed app. Keep email confirmation enabled for production.
-4. Upload the HTML files and `saas.js` together to a new repository/deployment. All files must share the same directory so relative links work.
-5. Open `admin.html`, create an account, confirm the email if requested, sign in, and create a business profile.
-6. In Supabase SQL Editor, review the new business and manually publish it after approval, using the example in `PLATFORM_ADMIN_GUIDE.sql`. Until then, the public catalogue stays private.
-7. Add products and photos. Test the catalogue URL in an incognito/private browser and place a test order.
-8. Test cross-business isolation with two separate accounts: verify each account only sees its own products, orders, quotations and domains.
+2. Open Supabase → SQL Editor and run these files in order: `SAAS_MIGRATION.sql`, `POS_SYNC_MIGRATION.sql`, then `SAAS_HARDENING_MIGRATION.sql`. Do not run them in the White Pack Supabase project. The migrations are additive; back up the database first.
+3. In Supabase SQL Editor, open `PLATFORM_ADMIN_GUIDE.sql`, replace the example email with the platform owner's exact sign-in email, and run the allowlist INSERT statement. Do not skip this step: platform-admin.html must deny all other accounts.
+4. In Supabase → Authentication, configure Site URL and Redirect URLs for the deployed app. Keep email confirmation enabled for production.
+5. Upload the HTML files and `saas.js` together to a new repository/deployment. All files must share the same directory so relative links work. Use the exact lowercase filenames in this ZIP.
+6. Open `admin.html`, create an account, confirm the email if requested, sign in, and create a business profile.
+7. Open `platform-admin.html` using the allowlisted platform-owner account. Review the business, approve/publish it, and set its subscription/payment details.
+8. Add products and photos. Test the catalogue URL in an incognito/private browser and place a test order.
+9. Test cross-business isolation with two separate accounts: verify each account only sees its own products, orders, quotations and domains.
 
 ## Custom domains — hosting requirement
 
@@ -38,7 +41,7 @@ The `verification_token` is generated for a future DNS TXT verification workflow
 
 ## Manual business approval
 
-New businesses are created unpublished (`is_published=false`). A platform operator reviews each business, then publishes it using the SQL in `PLATFORM_ADMIN_GUIDE.sql`. A trigger blocks business owners from changing their own publication status, owner ID, or catalogue slug through the browser API.
+New businesses are created unpublished (`is_published=false`). A platform operator reviews each business, then publishes it from `platform-admin.html`. The hardening migration installs an email allowlist for platform administrators. A database trigger blocks business owners from changing publication status, owner ID, catalogue slug, or subscription/payment fields through the browser API. Platform RPCs verify the allowlist on every call.
 
 ## Security notes
 
@@ -53,6 +56,6 @@ New businesses are created unpublished (`is_published=false`). A platform operat
 ## Current limitations to finish before commercial launch
 
 - Domain verification and hosting-provider custom-domain attachment are manual, not automated.
-- Billing/subscription collection is not included; account approvals and payments are manual as requested.
+- Billing/subscription collection is not included; plan/payment status and expiry are tracked manually by the platform administrator.
 - Team member invitation/role management and automated password-recovery UX need further polish.
 - This package is a functional starter; complete end-to-end tests and RLS review in a staging Supabase project before production use.

@@ -1,7 +1,7 @@
 {
   "name": "My Catalogue Business Admin",
   "short_name": "Catalogue Admin",
-  "start_url": "./Admin.html",
+  "start_url": "./admin.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f3f6f3",
