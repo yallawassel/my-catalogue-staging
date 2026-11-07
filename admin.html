@@ -1,5 +1,25 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#173f35"><title>My Catalogue — Business Admin</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script><script src="saas.js"></script><style>
 *{box-sizing:border-box}body{margin:0;background:#f3f6f3;color:#17231f;font:15px Arial,sans-serif}.oauth-row{margin:12px 0}.oauth{background:#fff;border:1px solid #ccd7ce}header{background:#173f35;color:#fff;padding:20px 16px}header h1{margin:0 0 5px}.wrap{max-width:1000px;margin:auto;padding:14px}.panel{background:#fff;border:1px solid #dfe7df;border-radius:15px;padding:16px;margin-bottom:14px}h2{margin:0 0 12px;font-size:19px}label{display:block;font-weight:700;font-size:13px;margin:10px 0 5px}input,textarea,select{width:100%;padding:12px;border:1px solid #ccd7ce;border-radius:9px;font:inherit;background:#fff}textarea{min-height:72px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1}.btn{border:0;border-radius:9px;padding:12px 14px;font-weight:800;cursor:pointer;background:#e8eee9;color:#173f35}.primary{background:#236653;color:#fff}.danger{background:#fee2e2;color:#991b1b}.hint{font-size:13px;line-height:1.5;color:#637269}.status{margin:10px 0;padding:10px;border-radius:9px;background:#e8f3eb;white-space:pre-wrap;overflow-wrap:anywhere}.error{background:#fff0ed;color:#a32d20}.hidden{display:none!important}.item{display:grid;grid-template-columns:72px 1fr auto;gap:10px;align-items:center;border:1px solid #e1e7e2;padding:9px;border-radius:11px;margin-top:8px}.item img{width:88px;height:88px;object-fit:contain;background:#fff;border:1px solid #e1e7e2;border-radius:8px}.inlineFields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.inlineFields input,.inlineFields textarea{min-width:0;padding:8px;font-size:13px}.inlineFields .wide{grid-column:1/-1}.inlineActions{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}.item{grid-template-columns:92px minmax(0,1fr)}.item .itemActions{grid-column:1/-1;display:flex;gap:6px;flex-wrap:wrap}.item .itemActions button{flex:1}.item .itemPhoto{display:flex;flex-direction:column;gap:6px}.item .itemPhoto input{width:100%;font-size:11px}.duplicateGroup{border:1px solid #f1c7a8;border-radius:10px;padding:10px;margin-top:8px;background:#fffaf5}.duplicateRow{display:grid;grid-template-columns:56px 1fr auto;gap:8px;align-items:center;padding:7px 0;border-top:1px solid #f3e2d5}.duplicateRow img{width:56px;height:56px;object-fit:contain;background:#fff;border-radius:6px}.item small{display:block;color:#68756e;margin-top:5px}.item button{margin:2px}.pill{display:inline-block;background:#e8eee9;border-radius:20px;padding:5px 8px;font-size:12px}.domain{background:#f8faf8;border:1px solid #e1e7e2;padding:10px;border-radius:10px;margin-top:8px;overflow-wrap:anywhere}@media(max-width:560px){.grid{grid-template-columns:1fr}.item{grid-template-columns:64px minmax(0,1fr);gap:8px}.item img{width:64px;height:64px}.inlineFields{grid-template-columns:1fr}.inlineFields .wide{grid-column:auto}.item .itemActions{grid-column:1/-1}.duplicateRow{grid-template-columns:44px 1fr}.duplicateRow img{width:44px;height:44px}.duplicateRow button{grid-column:2}}
+
+/* Shopify-style admin navigation */
+.admin-topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 14px;padding:12px 14px;background:#fff;border:1px solid #dfe7df;border-radius:14px;position:sticky;top:8px;z-index:20;box-shadow:0 4px 16px rgba(23,63,53,.06)}
+.admin-topbar strong{font-size:15px;color:#173f35}
+.admin-menu{position:relative}
+.admin-menu summary{list-style:none;cursor:pointer;border:1px solid #d5e0d7;border-radius:10px;padding:9px 12px;font-size:22px;line-height:1;color:#173f35;background:#f7faf7}
+.admin-menu summary::-webkit-details-marker{display:none}
+.admin-menu-items{position:absolute;right:0;top:46px;width:230px;max-height:70vh;overflow:auto;background:#fff;border:1px solid #dfe7df;border-radius:12px;padding:7px;box-shadow:0 12px 32px rgba(0,0,0,.15);z-index:30}
+.admin-menu-items button{display:block;width:100%;text-align:left;border:0;background:#fff;padding:11px;border-radius:8px;font-weight:700;color:#263b31;cursor:pointer}
+.admin-menu-items button:hover{background:#edf5ef}
+.admin-board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:16px}
+.admin-tile{min-height:132px;background:#fff;border:1px solid #dfe7df;border-radius:16px;padding:18px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:10px;box-shadow:0 3px 12px rgba(23,63,53,.04);color:#173f35}
+.admin-tile:hover{border-color:#76a88a;transform:translateY(-1px);box-shadow:0 8px 20px rgba(23,63,53,.09)}
+.admin-tile .tile-icon{width:42px;height:42px;border-radius:12px;background:#eaf3ec;display:grid;place-items:center;font-size:22px}
+.admin-tile strong{font-size:15px}.admin-tile small{font-size:12px;color:#68776e;line-height:1.4}
+.admin-page-heading{display:flex;align-items:center;gap:10px;margin:0 0 12px}
+.admin-back{border:0;border-radius:9px;background:#e8eee9;color:#173f35;padding:10px 13px;font-weight:800;cursor:pointer}
+#adminDashboard .dashboard-intro{margin:0 0 15px;color:#637269;line-height:1.5}
+@media(max-width:700px){.admin-board{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.admin-tile{min-height:120px;padding:13px}}
+@media(max-width:390px){.admin-board{grid-template-columns:1fr}.admin-tile{min-height:unset}}
 </style><link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icon-192.png">
 </head><body><header><div style="max-width:1000px;margin:auto"><h1>My Catalogue · Business Admin</h1><div>Manage your brand, products, custom domain and catalogue.</div></div></header><main class="wrap"><div id="status" class="status" role="status">Connecting…</div>
@@ -25,7 +45,56 @@
 </script>
 <section class="panel" id="authPanel"><h2>Sign in or create your account</h2><p class="hint">Create an account with your business email. If email confirmation is enabled in Supabase, confirm your email and then sign in. A business stays unpublished until the platform owner approves it.</p><div class="row oauth-row"><button class="btn oauth" id="googleSignIn" type="button">🌐 Continue with Google</button><button class="btn oauth" id="microsoftSignIn" type="button">✉️ Continue with Microsoft (Outlook / Hotmail)</button></div><p class="hint">Or use your email address</p><div class="grid"><div><label>Email</label><input id="email" type="email" autocomplete="username" placeholder="you@company.com"></div><div><label>Password</label><input id="password" type="password" autocomplete="current-password" placeholder="At least 8 characters"></div></div><div class="row"><button class="btn primary" id="signIn">Sign in</button><button class="btn" id="signUp">Create account</button></div><button class="btn" id="forgot">Forgot password? Send reset email</button></section><section class="panel hidden" id="resetPanel"><h2>Choose a new password</h2><p class="hint">Enter a new password for your account. Use at least 8 characters.</p><label for="newPassword">New password</label><input id="newPassword" type="password" autocomplete="new-password" minlength="8"><label for="confirmPassword">Confirm new password</label><input id="confirmPassword" type="password" autocomplete="new-password" minlength="8"><button class="btn primary" id="saveNewPassword" type="button">Save new password</button></section>
 <section class="panel hidden" id="createPanel"><h2>Create your business profile</h2><p class="hint">Your business receives a unique catalogue link. You can request a custom domain below.</p><label>Business / brand name</label><input id="company" placeholder="Example: Cedar Bakery"><label>Catalogue link name</label><input id="slug" placeholder="cedar-bakery"><div class="grid"><div><label>WhatsApp number with country code</label><input id="whatsapp" placeholder="961XXXXXXXX"></div><div><label>Currency</label><select id="currency"><option>USD</option><option>LBP</option><option>EUR</option></select></div></div><label>Short description</label><textarea id="description" placeholder="What your business offers"></textarea><button class="btn primary" id="createBusiness">Create business</button></section>
-<div id="app" class="hidden"><section class="panel"><div class="row" style="align-items:center"><div><h2 id="businessHeading">Business settings</h2><div id="publishStatus" class="pill">Awaiting approval</div></div><button class="btn" id="signOut">Sign out</button></div><div class="grid"><div><label>Brand name</label><input id="editCompany"></div><div><label>Catalogue slug</label><input id="editSlug" disabled></div><div><label>WhatsApp number</label><input id="editWhatsapp" placeholder="961XXXXXXXX"></div><div><label>Currency</label><select id="editCurrency"><option>USD</option><option>LBP</option><option>EUR</option></select></div><div><label>Brand colour</label><input id="brandColor" type="color" value="#173f35"></div><div><label>Logo image</label><input id="logoFile" type="file" accept="image/*"></div></div><label>Description</label><textarea id="editDescription"></textarea><div class="row"><button class="btn primary" id="saveSettings">Save business settings</button><button class="btn" id="copyLink">Copy catalogue link</button><a class="btn" id="openCatalogue" target="_blank" rel="noopener">Preview catalogue</a><button class="btn" id="installBusinessAdmin" type="button">Install Business Admin</button></div><div class="hint" style="margin-top:8px">Public catalogue link: <span id="catalogueLink"></span></div></section>
+<div id="app" class="hidden">
+<div id="adminDashboard">
+  <div class="admin-topbar">
+    <strong>WhitePack Admin · Dashboard</strong>
+    <details class="admin-menu">
+      <summary aria-label="Open admin navigation">⋮</summary>
+      <div class="admin-menu-items">
+        <button type="button" data-admin-open="0">⚙️ Business settings</button>
+        <button type="button" data-admin-open="1">🎨 Catalogue design</button>
+        <button type="button" data-admin-open="2">🌐 Custom domain</button>
+        <button type="button" data-admin-open="3">📦 Add product</button>
+        <button type="button" data-admin-open="4">📊 Excel import & sync</button>
+        <button type="button" data-admin-open="5">🖼️ Category photos</button>
+        <button type="button" data-admin-open="6">↕️ Category ordering</button>
+        <button type="button" data-admin-open="7">🗂️ Products</button>
+        <button type="button" data-admin-open="8">🧰 Business tools</button>
+      </div>
+    </details>
+  </div>
+  <h2>Manage your catalogue</h2>
+  <p class="dashboard-intro">Choose a section below. Your settings are now organized into separate pages.</p>
+  <div class="admin-board">
+    <button class="admin-tile" type="button" data-admin-open="0"><span class="tile-icon">⚙️</span><strong>Business settings</strong><small>Brand name, logo, currency and WhatsApp</small></button>
+    <button class="admin-tile" type="button" data-admin-open="1"><span class="tile-icon">🎨</span><strong>Catalogue design</strong><small>Storefront appearance and product layout</small></button>
+    <button class="admin-tile" type="button" data-admin-open="2"><span class="tile-icon">🌐</span><strong>Custom domain</strong><small>Connect your own website address</small></button>
+    <button class="admin-tile" type="button" data-admin-open="3"><span class="tile-icon">➕</span><strong>Add product</strong><small>Create or edit catalogue products</small></button>
+    <button class="admin-tile" type="button" data-admin-open="4"><span class="tile-icon">📊</span><strong>Excel import & sync</strong><small>Upload product sheets and synchronize SKU</small></button>
+    <button class="admin-tile" type="button" data-admin-open="5"><span class="tile-icon">🖼️</span><strong>Category photos</strong><small>Upload a dedicated image for each category</small></button>
+    <button class="admin-tile" type="button" data-admin-open="6"><span class="tile-icon">↕️</span><strong>Category ordering</strong><small>Arrange the order of catalogue categories</small></button>
+    <button class="admin-tile" type="button" data-admin-open="7"><span class="tile-icon">🗂️</span><strong>Products</strong><small>View, search and manage all products</small></button>
+    <button class="admin-tile" type="button" data-admin-open="8"><span class="tile-icon">🧰</span><strong>Business tools</strong><small>Orders and other business utilities</small></button>
+  </div>
+</div>
+<div id="adminPageToolbar" class="admin-topbar hidden">
+  <button type="button" class="admin-back" id="adminBack">← Dashboard</button>
+  <strong id="adminCurrentTitle">Admin section</strong>
+  <details class="admin-menu"><summary aria-label="Open admin navigation">⋮</summary><div class="admin-menu-items">
+    <button type="button" data-admin-home>⌂ Dashboard</button>
+    <button type="button" data-admin-open="0">⚙️ Business settings</button>
+    <button type="button" data-admin-open="1">🎨 Catalogue design</button>
+    <button type="button" data-admin-open="2">🌐 Custom domain</button>
+    <button type="button" data-admin-open="3">📦 Add product</button>
+    <button type="button" data-admin-open="4">📊 Excel import & sync</button>
+    <button type="button" data-admin-open="5">🖼️ Category photos</button>
+    <button type="button" data-admin-open="6">↕️ Category ordering</button>
+    <button type="button" data-admin-open="7">🗂️ Products</button>
+    <button type="button" data-admin-open="8">🧰 Business tools</button>
+  </div></details>
+</div>
+<section class="panel"><div class="row" style="align-items:center"><div><h2 id="businessHeading">Business settings</h2><div id="publishStatus" class="pill">Awaiting approval</div></div><button class="btn" id="signOut">Sign out</button></div><div class="grid"><div><label>Brand name</label><input id="editCompany"></div><div><label>Catalogue slug</label><input id="editSlug" disabled></div><div><label>WhatsApp number</label><input id="editWhatsapp" placeholder="961XXXXXXXX"></div><div><label>Currency</label><select id="editCurrency"><option>USD</option><option>LBP</option><option>EUR</option></select></div><div><label>Brand colour</label><input id="brandColor" type="color" value="#173f35"></div><div><label>Logo image</label><input id="logoFile" type="file" accept="image/*"></div></div><label>Description</label><textarea id="editDescription"></textarea><div class="row"><button class="btn primary" id="saveSettings">Save business settings</button><button class="btn" id="copyLink">Copy catalogue link</button><a class="btn" id="openCatalogue" target="_blank" rel="noopener">Preview catalogue</a><button class="btn" id="installBusinessAdmin" type="button">Install Business Admin</button></div><div class="hint" style="margin-top:8px">Public catalogue link: <span id="catalogueLink"></span></div></section>
 <section class="panel"><h2>Catalogue design</h2><p class="hint">Choose the storefront look and how products are displayed.</p><label for="catalogueTemplate">Catalogue template</label><select id="catalogueTemplate"><option value="classic">Classic — clean product grid</option><option value="premium">Premium — dark luxury storefront</option><option value="fresh">Fresh — bright rounded cards</option><option value="shopify">Shopify-style — modern store grid</option><option value="editorial">Editorial — large visual product cards</option><option value="compact">Compact — more products per screen</option><option value="list">List — horizontal product rows</option><option value="showcase">Showcase — large product images</option></select><button class="btn primary" id="saveTemplate" type="button">Save catalogue design</button><p class="hint">Each business saves its own design. Products, logo, prices and catalogue link stay the same.</p></section>
 <section class="panel"><h2>Custom domain</h2><p class="hint">Enter a domain you own, for example shop.example.com. Your hosting provider must route that domain to this catalogue app and enable HTTPS. Domain approval is manual; it is not active until verified by the platform operator.</p><label>Custom domain (without https://)</label><input id="domainInput" placeholder="shop.example.com"><button class="btn primary" id="requestDomain">Request domain setup</button><div id="domainList"></div></section>
 <section class="panel"><h2 id="productTitle">Add a product</h2><input id="productId" type="hidden"><div class="grid"><div><label>Product name *</label><input id="pName" placeholder="Kraft paper bag"></div><div><label>Category *</label><input id="pCategory" list="categories" placeholder="Paper bags"><datalist id="categories"></datalist></div><div><label>Barcode</label><input id="pBarcode" placeholder="Optional barcode"></div><div><label>SKU</label><input id="pSku" placeholder="Internal stock code"></div><div><label>POS product ID</label><input id="pPosId" placeholder="ID from your POS"></div><div><label>Product photo</label><input id="pPhoto" type="file" accept="image/*"></div><div><label>First unit (e.g. Box)</label><input id="pLabel1" value="Box"></div><div><label>First price</label><input id="pPrice1" type="number" min="0" step="0.01" placeholder="Leave blank if not priced"></div><div><label>Second unit (e.g. Packet)</label><input id="pLabel2" value="Packet"></div><div><label>Second price</label><input id="pPrice2" type="number" min="0" step="0.01" placeholder="Leave blank if not priced"></div><div><label>Display order number</label><input id="pSortOrder" type="number" min="1" step="1" value="1" placeholder="1 = first"></div></div><p class="hint">Use 1, 2, 3… to control product order. Category order follows the first product position in that category.</p><label>Description / sizes / material / specifications</label><textarea id="pDescription" placeholder="Sizes, quantity, material, packaging details..."></textarea><div class="row"><button class="btn primary" id="saveProduct">Save product</button><button class="btn" id="cancelProduct">Clear form</button></div><p class="hint">Images are optimized to WebP up to 1200 × 1200 px before upload. Product records and images are scoped to your business.</p></section>
@@ -416,4 +485,29 @@ $('requestDomain').onclick=async()=>{try{const domain=$('domainInput').value.tri
 $('domainList').onclick=async e=>{const b=e.target.closest('[data-domain-delete]');if(!b||!confirm('Cancel this pending domain request?'))return;const r=await sb.from('mc_saas_custom_domains').delete().eq('id',b.dataset.domainDelete).eq('business_id',biz.id);if(r.error)setStatus(r.error.message,true);else{await loadDomains();setStatus('Domain request removed.')}};
 sb.auth.onAuthStateChange(()=>setTimeout(()=>sessionLoad().catch(e=>setStatus(e.message,true)),0));sessionLoad().catch(e=>setStatus(e.message,true));
 })();
-</script></body></html>
+</script>
+<script>
+(function(){
+ const app=document.getElementById('app'); if(!app) return;
+ const sections=Array.from(app.children).filter(el=>el.tagName==='SECTION');
+ const names=['Business settings','Catalogue design','Custom domain','Add product','Product & Price Synchronization','Category photos','Category ordering','Products','Business tools'];
+ const board=document.getElementById('adminDashboard'), toolbar=document.getElementById('adminPageToolbar');
+ const title=document.getElementById('adminCurrentTitle');
+ function home(){sections.forEach(s=>s.classList.add('hidden'));board.classList.remove('hidden');toolbar.classList.add('hidden');}
+ function openPage(index){
+   if(!sections[index]) return;
+   sections.forEach((s,i)=>s.classList.toggle('hidden',i!==index));
+   board.classList.add('hidden');toolbar.classList.remove('hidden');
+   title.textContent=names[index]||'Admin section';
+   document.querySelectorAll('.admin-menu[open]').forEach(d=>d.removeAttribute('open'));
+   window.scrollTo({top:0,behavior:'smooth'});
+ }
+ app.addEventListener('click',function(e){
+   const open=e.target.closest('[data-admin-open]');
+   if(open){e.preventDefault();openPage(Number(open.dataset.adminOpen));return;}
+   if(e.target.closest('[data-admin-home]')||e.target.closest('#adminBack')){e.preventDefault();home();}
+ });
+ sections.forEach(s=>s.classList.add('hidden'));
+})();
+</script>
+</body></html>
