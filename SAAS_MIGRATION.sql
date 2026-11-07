@@ -56,7 +56,7 @@ grant execute on function public.mc_saas_create_business(text,text,text,text,tex
 
 create table if not exists public.mc_saas_categories (
  id uuid primary key default gen_random_uuid(), business_id uuid not null references public.mc_saas_businesses(id) on delete cascade,
- name text not null, sort_order integer not null default 0, created_at timestamptz not null default now(),
+ name text not null, image_url text not null default '', sort_order integer not null default 0, created_at timestamptz not null default now(),
  unique(business_id,name), unique(business_id,id)
 );
 create table if not exists public.mc_saas_products (
@@ -161,3 +161,6 @@ commit;
 -- CUSTOM DOMAIN: first point DNS to your chosen host; verify DNS/HTTPS outside this SQL, then:
 -- update public.mc_saas_custom_domains set verified=true, active=true where domain='shop.example.com';
 -- Only platform operators should run the approval statements above. Never expose a service-role key in HTML.
+
+-- Category artwork: safe for existing installations
+alter table public.mc_saas_categories add column if not exists image_url text not null default '';
