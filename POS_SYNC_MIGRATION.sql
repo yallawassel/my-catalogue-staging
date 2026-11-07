@@ -6,8 +6,24 @@ alter table public.mc_saas_products
   add column if not exists sku text not null default '',
   add column if not exists pos_product_id text not null default '';
 
-create index if not exists mc_saas_products_business_sku
-  on public.mc_saas_products(business_id, sku) where sku <> '';
+-- SKU is the primary product reference and must be unique within each business.
+-- If this check raises an error, review/fix duplicate SKUs in the catalogue first.
+do $$
+begin
+  if exists (
+    select 1
+    from public.mc_saas_products
+    where coalesce(trim(sku), '') <> ''
+    group by business_id, lower(trim(sku))
+    having count(*) > 1
+  ) then
+    raise exception 'Duplicate SKUs already exist. Resolve duplicate SKUs in the catalogue, then run this migration again.';
+  end if;
+end $$;
+
+create unique index if not exists mc_saas_products_business_sku
+  on public.mc_saas_products(business_id, lower(trim(sku)))
+  where trim(sku) <> '';
 create index if not exists mc_saas_products_business_pos_id
   on public.mc_saas_products(business_id, pos_product_id) where pos_product_id <> '';
 

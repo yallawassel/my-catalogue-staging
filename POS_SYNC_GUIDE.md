@@ -12,12 +12,12 @@
 
 ## Matching order
 
-1. POS Product ID (`pos_product_id`)
-2. Barcode
-3. SKU
+1. **SKU** — primary product reference and unique within each business.
+2. POS Product ID (`pos_product_id`) — fallback only when SKU does not match.
+3. Barcode — fallback only when SKU and POS Product ID do not match.
 4. Otherwise treated as a new product in Full product mode only.
 
-Product name is never used as an automatic update key. Multiple matches are flagged for manual resolution.
+Every new product must have a unique SKU. Product name is never used as an automatic update key. Multiple matches are flagged for manual resolution.
 
 ## First-time setup
 
@@ -27,7 +27,7 @@ Product name is never used as an automatic update key. Multiple matches are flag
 4. Deploy the updated `admin.html` and existing project files together.
 5. Sign in as a business owner and open **Product & Price Synchronization**.
 6. Download the POS template or upload an Excel/CSV exported from the POS.
-7. Select Price-only or Full product sync, enter the desired online markup/discount, analyze, review and authorize.
+7. Select the product photos in the photo picker (multi-select is supported); filenames should resemble product names or SKUs for automatic matching.\n8. Select **Full product sync** to add products and upload photos (this is now the default). Select Price-only only when updating prices of products already in the catalogue. Enter the desired online markup/discount, analyze, review and authorize.
 
 ## Supported spreadsheet columns
 
@@ -36,7 +36,7 @@ Recognized headings include:
 - `POS Product ID`, `POS ID`, `Product ID`, `External ID`
 - `Product Name`, `Name`, `Product`, `Item`
 - `Barcode`, `EAN`, `UPC`
-- `SKU`, `Item SKU`
+- `SKU`, `Item SKU` (**required for new products and used as the primary match key**)
 - `Category`
 - `Label1`, `Unit1`, `First Unit`; `Price1`, `Price 1`, `Selling Price`, `Wholesale Price`
 - `Label2`, `Unit2`, `Second Unit`; `Price2`, `Price 2`, `Retail Price`

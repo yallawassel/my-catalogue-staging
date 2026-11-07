@@ -12,3 +12,7 @@ VALIDATION: JavaScript syntax checks passed for the inline scripts in admin.html
 LIMITATION: This package was syntax-checked but could not be live-tested against your Supabase project from this environment. After uploading, test with one product before bulk changes.
 
 DEPLOYMENT: Back up the current GitHub files. Replace the matching files in the my-catalogue repository, keeping filenames and folder structure unchanged. Keep White Pack separate.
+
+7. Product synchronization now defaults to Full product sync so new products can be added.
+8. SKU is the primary match reference (SKU → POS Product ID → Barcode). New products require a unique SKU.
+9. Manual product saving requires a unique SKU. The Supabase migration creates a unique per-business SKU index after checking for existing duplicates.
